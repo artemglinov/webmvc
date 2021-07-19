@@ -6,6 +6,7 @@ import org.example.dto.OrderIdAmountRequestDto;
 import org.example.dto.OrderIdRequestDto;
 import org.example.dto.OrderStatusResponseDto;
 import org.example.service.OrderService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,15 +42,15 @@ public class OrderController {
     return service.getOrderStatus(dto);
   }
 
-  @PostMapping(path = "/deposit.do", params = "id:{d+}") //look regex carefully!
-//  @ResponseStatus(HttpStatus.OK)
-  public void deposite(OrderIdAmountRequestDto dto) {
-    service.deposite(dto);
+  @PostMapping(path = "/deposit.do")
+  @ResponseStatus(HttpStatus.OK)
+  public void deposit(OrderIdAmountRequestDto dto) {
+    service.deposit(dto);
   }
 
 
   @PostMapping(path = "/reverse.do", params = "id")
-  @ResponseBody
+  @ResponseStatus(HttpStatus.OK)
   public void reverse(OrderIdRequestDto dto) {
     service.reverse(dto);
   }

@@ -5,12 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public class OrderStatusResponseDto {
-    private long id;
-    private String orderNumber;
-    private int amount;
-    private int currency;
-    private int status;
+    private final long id;
+    private final String orderNumber;
+    private final int amount;
+    private final int currency;
+    private final int status;
 }

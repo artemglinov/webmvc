@@ -27,7 +27,7 @@ public class OrderService {
         return repository.create(order).orElseThrow(ItemNotFoundException::new);
     }
 
-    public void deposite(OrderIdAmountRequestDto dto) {
+    public void deposit(OrderIdAmountRequestDto dto) {
         authenticate(dto.getUserName(), dto.getPassword());
         authorize(dto.getId(), dto.getUserName(), dto.getPassword());
         if (!repository.setStatus(dto.getId(), COMPLETION_STATUS)) {

@@ -1,38 +1,7 @@
-#GET http://localhost:8080/api/products
-#
-#> {%
-#client.test("Request executed successfully", function() {
-#  client.assert(response.status === 200, "Response status is not 200");
-#});
-#%}
-#
-####
-#
-#GET http://localhost:8080/api/products?id=1
-#
-#> {%
-#client.test("Request executed successfully", function() {
-#  client.assert(response.status === 200, "Response status is not 200");
-#});
-#%}
-#
-####
-#
-#GET http://localhost:8080/api/products?id=404
-#
-#> {%
-#client.test("Request executed successfully", function() {
-#  client.assert(response.status === 404, "Response status is not 404");
-#});
-#%}
-#
-####
-
 POST http://localhost:8080/rest/register.do
 Content-Type: application/x-www-form-urlencoded
 
-orderNumber='1'&amount=5&currency=10&returnUrl='http://testsuccess.com'&failUrl='http://testfail.com'&userName='admin'&
-password='pass'
+orderNumber=1&amount=5&currency=10&returnUrl=http://testsuccess.com&failUrl=http://testfail.com&userName=admin&password=pass
 
 > {%
 client.test("Request executed successfully", function() {
@@ -43,10 +12,23 @@ client.test("Request executed successfully", function() {
 
 ###
 
+POST http://localhost:8080/rest/register.do
+Content-Type: application/x-www-form-urlencoded
+
+orderNumber=1&amount=5&currency=10&returnUrl=http://testsuccess.com&failUrl=http://testfail.com&userName=invalid_admin&password=invalid_pass
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 401, "Response status is not 401");
+});
+%}
+
+###
+
 POST http://localhost:8080/rest/reverse.do
 Content-Type: application/x-www-form-urlencoded
 
-id=1&userName='admin'&password='pass'
+id=1&userName=admin&password=pass
 
 
 > {%
@@ -57,10 +39,10 @@ client.test("Request executed successfully", function() {
 
 ###
 
-POST http://localhost:8080/rest/deposite.do
+POST http://localhost:8080/rest/deposit.do
 Content-Type: application/x-www-form-urlencoded
 
-id=1&userName='admin'&password='pass'
+id=1&amount=5&userName=admin&password=pass
 
 > {%
 client.test("Request executed successfully", function() {
@@ -73,10 +55,23 @@ client.test("Request executed successfully", function() {
 POST http://localhost:8080/rest/getOrderStatus.do
 Content-Type: application/x-www-form-urlencoded
 
-id=1&userName='admin'&password='pass'
+id=1&userName=admin&password=pass
 
 > {%
 client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+
+POST http://localhost:8080/rest/getOrderStatus.do
+Content-Type: application/x-www-form-urlencoded
+
+id=1&userName=another_admin&password=another_pass
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 403, "Response status is not 403");
 });
 %}
