@@ -18,18 +18,6 @@ import java.util.Map;
 public class OrderController {
   private final OrderService service;
 
-//  @GetMapping
-//  @ResponseBody
-//  public List<Order> getAll() {
-//    return service.getAll();
-//  }
-
-//  @GetMapping(params = "id")
-//  @ResponseBody
-//  public Order getById(@RequestParam long id) {
-//    return service.getById(id);
-//  }
-
   @PostMapping("/register.do")
   @ResponseBody
   public long register(Order order) {
