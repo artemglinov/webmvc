@@ -51,8 +51,9 @@ public class OrderService {
     }
 
     private void authenticate(String userName, String password) {
-        if (!authManager.authenticate(userName, password))
+        if (!authManager.authenticate(userName, password)) {
             throw new AppAuthenticationException();
+        }
     }
 
     private void authorize(long id, String userName, String password) {
