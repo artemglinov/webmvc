@@ -1,7 +1,7 @@
 CREATE TABLE users
 (
     id BIGSERIAL PRIMARY KEY,
-    user_name TEXT NOT NULL,
+    user_name TEXT NOT NULL UNIQUE,
     password  TEXT NOT NULL
 );
 CREATE TABLE orders
