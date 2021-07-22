@@ -7,25 +7,23 @@ import org.example.dto.OrderIdRequestDto;
 import org.example.dto.OrderStatusResponseDto;
 import org.example.service.OrderService;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
-@Controller
+@RestController
 @RequestMapping("/rest")
 @RequiredArgsConstructor
 public class OrderController {
   private final OrderService service;
 
   @PostMapping("/register.do")
-  @ResponseBody
   public long register(Order order) {
     return service.register(order);
   }
 
   @PostMapping(path = "/getOrderStatus.do")
-  @ResponseBody
   public OrderStatusResponseDto getOrderStatus(OrderIdRequestDto dto) {
     return service.getOrderStatus(dto);
   }
