@@ -5,6 +5,7 @@ import org.example.auth.AuthManager;
 import org.example.domain.Order;
 import org.example.dto.OrderIdAmountRequestDto;
 import org.example.dto.OrderIdRequestDto;
+import org.example.dto.OrderRegistrationRequestDto;
 import org.example.dto.OrderStatusResponseDto;
 import org.example.exception.AppAuthenticationException;
 import org.example.exception.AppAuthorizationException;
@@ -17,13 +18,24 @@ import org.springframework.stereotype.Service;
 public class OrderService {
 
     private final AuthManager authManager;
+
     private final OrderRepository repository;
+
+    private final UserService userService;
 
     private final int COMPLETION_STATUS = 2;
     private final int CANCELLATION_STATUS = 3;
 
-    public long register(Order order) {
-        authenticate(order.getUserName(), order.getPassword());
+    public long register(OrderRegistrationRequestDto dto) {
+        authenticate(dto.getUserName(), dto.getPassword());
+        Order order = Order.builder()
+                .userId(userService.getUserId(dto.getUserName(), dto.getPassword()))
+                .orderNumber(dto.getOrderNumber())
+                .amount(dto.getAmount())
+                .currency(dto.getCurrency())
+                .returnUrl(dto.getReturnUrl())
+                .failUrl(dto.getFailUrl())
+                .build();
         return repository.create(order).orElseThrow(ItemNotFoundException::new);
     }
 

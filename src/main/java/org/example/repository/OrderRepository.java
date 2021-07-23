@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Repository
 public class OrderRepository {
+
     private final JdbcTemplate template;
 
     private final RowMapper<Long> longRowMapper = (rs, i) -> rs.getLong("id");
@@ -30,9 +31,9 @@ public class OrderRepository {
     public Optional<Long> create(Order order) {
         // language=PostgreSQL
         return queryForOptional(
-                "INSERT INTO orders(order_number, amount, currency, returnurl, failurl, user_name, password) VALUES(?, ?, ?, ?, ?, ?, ?) " +
-                        "RETURNING id", longRowMapper, order.getOrderNumber(), order.getAmount(), order.getCurrency(), order.getReturnUrl(),
-                order.getFailUrl(), order.getUserName(), order.getPassword()
+                "INSERT INTO orders(user_id, order_number, amount, currency, returnurl, failurl) VALUES(?, ?, ?, ?, ?, ?) " +
+                        "RETURNING id", longRowMapper, order.getUserId(), order.getOrderNumber(), order.getAmount(),
+                order.getCurrency(), order.getReturnUrl(), order.getFailUrl()
         );
     }
 
@@ -54,7 +55,9 @@ public class OrderRepository {
     }
 
     public boolean isUserMatchedWithOrder(long id, String userName, String password) {
-        return template.query("SELECT id FROM orders WHERE user_name = ? AND password = ? AND id = ?", longRowMapper,
+        // language=PostgreSQL
+        return template.query("SELECT o.id FROM orders AS o JOIN users AS u ON o.user_id = u.id" +
+                        " WHERE user_name = ? AND password = ? AND o.id = ?", longRowMapper,
                 userName, password, id).size() == 1;
     }
 

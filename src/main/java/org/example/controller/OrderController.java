@@ -1,9 +1,9 @@
 package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.domain.Order;
 import org.example.dto.OrderIdAmountRequestDto;
 import org.example.dto.OrderIdRequestDto;
+import org.example.dto.OrderRegistrationRequestDto;
 import org.example.dto.OrderStatusResponseDto;
 import org.example.service.OrderService;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,8 @@ public class OrderController {
   private final OrderService service;
 
   @PostMapping("/register.do")
-  public long register(Order order) {
-    return service.register(order);
+  public long register(OrderRegistrationRequestDto dto) {
+    return service.register(dto);
   }
 
   @PostMapping(path = "/getOrderStatus.do")

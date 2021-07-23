@@ -1,18 +1,16 @@
 package org.example.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
-  private long id;
-  private String userName;
-  private String password;
+  private long userId;
   private String orderNumber;
   private int amount;
   private int currency;
